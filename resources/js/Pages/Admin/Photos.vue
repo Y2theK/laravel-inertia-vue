@@ -121,14 +121,29 @@
                         >
                           Edit
                         </a>
-                        <a
-                          href="#"
-                          class="text-indigo-600 hover:text-indigo-900"
-                        >
+                        <danger-button @click="delete_photo(photo)">
                           Delete
-                        </a>
+                        </danger-button>
                       </td>
                     </tr>
+                    <dialog-modal :show="data.show_modal">
+                      <template #title>
+                        Photo {{ data.photo.description.slice(0, 20) + "..." }}
+                      </template>
+                      <template #content>
+                        Are you sure you want to delete this photo?
+                      </template>
+                      <template #footer>
+                        <button @click="closeModal" class="px-4 py-2">
+                          Close
+                        </button>
+                        <form @submit.prevent="deleting_photo(data.photo.id)">
+                          <danger-button type="submit"
+                            >Yes, I am sure!</danger-button
+                          >
+                        </form>
+                      </template>
+                    </dialog-modal>
                   </tbody>
                 </table>
               </div>
@@ -142,13 +157,66 @@
 <script>
 import { defineComponent } from "vue";
 import AppLayout from "@/Layouts/AppLayout.vue";
-
+import { ref } from "vue";
+import { useForm } from "@inertiajs/inertia-vue3";
+import DialogModal from "@/Components/DialogModal.vue";
+import DangerButton from "@/Components/DangerButton.vue";
 export default defineComponent({
   components: {
     AppLayout,
+    DialogModal,
+    DangerButton,
   },
   props: {
     photos: Array,
+  },
+  // / 1. add the setup function
+  setup() {
+    // 2. declare a form variable and assign to it the Inertia useForm() helper function
+    const form = useForm({
+      // 3. override the form method to make a DELETE request
+      _method: "DELETE",
+    });
+    // 4. define a reactive object with show_modal and photo property
+    // this will be used to figure out when to show the modal and the selected post values
+    const data = ref({
+      show_modal: false,
+      photo: {
+        id: null,
+        path: null,
+        description: null,
+      },
+    });
+
+    // 5. define the delete_photo function and update the values of the show_modal and photo properties
+    // of the reactive object defined above. This method is called by the delete button and will record the details
+    // of the selected post
+    const delete_photo = (photo) => {
+      //console.log(photo);
+      // console.log(photo.id, photo.path, photo.description);
+      data.value = {
+        photo: {
+          id: photo.id,
+          path: photo.path,
+          description: photo.description,
+        },
+        show_modal: true,
+      };
+      // console.log(data.value.photo);
+    };
+    // 6. define the method that will be called when our delete form is submitted
+    // the form will be created next
+    const deleting_photo = (id) => {
+      form.post(route("admin.photos.delete", id));
+      closeModal();
+    };
+    // 7. delare a method to close the modal by setting the show_modal to false
+    const closeModal = () => {
+      data.value.show_modal = false;
+    };
+    // 8. remember to return from the setup function the all variables and methods that you want to expose
+    // to the template.
+    return { form, data, closeModal, delete_photo, deleting_photo };
   },
 });
 </script>
