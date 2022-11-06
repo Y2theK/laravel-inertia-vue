@@ -8,10 +8,37 @@
       <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
         <!-- All posts goes here -->
         <h1 class="text-2xl">Photos</h1>
-        <a
-          class="px-4 bg-sky-900 text-white rounded-md"
-          :href="route('admin.photos.create')"
-          >Create</a
+        <a :href="route('admin.photos.create')">
+          <button
+            :type="type"
+            class="
+              mt-2
+              mb-4
+              inline-flex
+              items-center
+              justify-center
+              px-4
+              py-2
+              mr-4
+              bg-blue-600
+              border border-transparent
+              rounded-md
+              font-semibold
+              text-xs text-white
+              uppercase
+              tracking-widest
+              hover:bg-blue-500
+              focus:outline-none
+              focus:border-blue-700
+              focus:ring
+              focus:ring-blue-200
+              active:bg-blue-600
+              disabled:opacity-25
+              transition
+            "
+          >
+            Create
+          </button></a
         >
         <div class="flex flex-col">
           <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
@@ -109,18 +136,37 @@
                           font-medium
                         "
                       >
-                        <a
-                          href="#"
-                          class="text-indigo-600 hover:text-indigo-900"
+                        <a :href="route('admin.photos.edit', photo.id)">
+                          <button
+                            :type="type"
+                            class="
+                              inline-flex
+                              items-center
+                              justify-center
+                              px-4
+                              py-2
+                              mr-4
+                              bg-yellow-600
+                              border border-transparent
+                              rounded-md
+                              font-semibold
+                              text-xs text-white
+                              uppercase
+                              tracking-widest
+                              hover:bg-yellow-500
+                              focus:outline-none
+                              focus:border-yellow-700
+                              focus:ring
+                              focus:ring-yellow-200
+                              active:bg-yellow-600
+                              disabled:opacity-25
+                              transition
+                            "
+                          >
+                            Edit
+                          </button></a
                         >
-                          View
-                        </a>
-                        <a
-                          :href="route('admin.photos.edit', photo.id)"
-                          class="text-indigo-600 hover:text-indigo-900"
-                        >
-                          Edit
-                        </a>
+
                         <danger-button @click="delete_photo(photo)">
                           Delete
                         </danger-button>
@@ -207,7 +253,7 @@ export default defineComponent({
     // 6. define the method that will be called when our delete form is submitted
     // the form will be created next
     const deleting_photo = (id) => {
-      form.post(route("admin.photos.delete", id));
+      form.post(route("admin.photos.destroy", id));
       closeModal();
     };
     // 7. delare a method to close the modal by setting the show_modal to false

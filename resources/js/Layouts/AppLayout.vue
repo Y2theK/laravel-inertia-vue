@@ -66,8 +66,8 @@ const logout = () => {
                   Dashboard
                 </NavLink>
                 <NavLink
-                  :href="route('admin.photos')"
-                  :active="route().current('admin.photos')"
+                  :href="route('admin.photos.index')"
+                  :active="route().current('admin.photos.index')"
                 >
                   Photos
                 </NavLink>
