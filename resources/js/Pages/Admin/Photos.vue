@@ -9,7 +9,7 @@
         <!-- All posts goes here -->
         <h1 class="text-2xl">Photos</h1>
         <a
-          class="px-4 bg-sky-900 text-white rounded-md uppercase tracking-wider"
+          class="px-4 bg-sky-900 text-white rounded-md"
           :href="route('admin.photos.create')"
           >Create</a
         >
