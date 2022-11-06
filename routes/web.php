@@ -22,6 +22,19 @@ Route::middleware([
     Route::get('/', function () {
         return Inertia::render('Dashboard');
     })->name('dashboard');
+
+    Route::get('/photos', function () {
+        return inertia('Admin/Photos', [
+            'photos' => Photo::all()
+        ]);
+    })->name('photos');
+
+    Route::get('/photos/create', function () {
+        return inertia('Admin/PhotosCreate')->name('photos.create');
+    });
+    Route::post('/photos', function () {
+        dd('i will handle form submission');
+    })->name('photos.store');
 });
 Route::get('photos', function () {
     // dd(Photo::all());
