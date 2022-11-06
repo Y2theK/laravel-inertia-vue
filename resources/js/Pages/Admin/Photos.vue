@@ -113,7 +113,19 @@
                           href="#"
                           class="text-indigo-600 hover:text-indigo-900"
                         >
-                          View - Edit - Delete
+                          View
+                        </a>
+                        <a
+                          :href="route('admin.photos.edit', photo.id)"
+                          class="text-indigo-600 hover:text-indigo-900"
+                        >
+                          Edit
+                        </a>
+                        <a
+                          href="#"
+                          class="text-indigo-600 hover:text-indigo-900"
+                        >
+                          Delete
                         </a>
                       </td>
                     </tr>
